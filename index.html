@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ミリプロ タレント紹介</title>
+  <!-- Google Fonts: Kaisei Opti (魁星オプティ) の読み込み -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Kaisei+Opti:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* 全体設定 */
+    :root {
+      --font-kaisei: 'Kaisei Opti', serif;
+      --color-koma: #FFAB57;
+      --color-tsukuri: #CDCADC;
+      --color-tsukuri-text: #7A7593; /* 背景色とのコントラスト用 */
+      --color-liz: #769595;
+      --grad-mili-start: #8B7BB8; /* ミリプロ公式藤色 */
+      --grad-mili-end: #F7A8C4;   /* 薄ピンク */
+    }
+
+    body {
+      font-family: var(--font-kaisei), serif;
+      background-color: #f8f9fa;
+      color: #333333;
+      margin: 0;
+      padding: 40px 20px;
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ヘッダー・メインタイトル */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding-bottom: 20px;
+      border-bottom: 3px solid;
+      border-image: linear-gradient(90deg, var(--grad-mili-start), var(--grad-mili-end)) 1;
+    }
+
+    .title-gradient {
+      font-size: 2.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--grad-mili-start), var(--grad-mili-end));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0 0 10px 0;
+    }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #666;
+      margin: 0;
+    }
+
+    /* タレントカード */
+    .talent-card {
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      padding: 35px;
+      margin-bottom: 40px;
+      border-top: 6px solid #ccc;
+      transition: transform 0.2s ease;
+    }
+
+    /* 各タレントの個別のテーマカラー線 */
+    .talent-card.koma { border-top-color: var(--color-koma); }
+    .talent-card.tsukuri { border-top-color: var(--color-tsukuri); }
+    .talent-card.liz { border-top-color: var(--color-liz); }
+
+    /* カード内タイトルエリア */
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .talent-name {
+      font-size: 2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .talent-name.koma { color: var(--color-koma); }
+    .talent-name.tsukuri { color: var(--color-tsukuri-text); }
+    .talent-name.liz { color: var(--color-liz); }
+
+    .talent-affiliation {
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      color: #fff;
+    }
+
+    .talent-affiliation.koma { background-color: var(--color-koma); }
+    .talent-affiliation.tsukuri { background-color: var(--color-tsukuri-text); }
+    .talent-affiliation.liz { background-color: var(--color-liz); }
+
+    .catchphrase {
+      font-size: 1.2rem;
+      font-style: italic;
+      color: #555;
+      margin-bottom: 20px;
+      padding-left: 10px;
+      border-left: 3px solid #ddd;
+    }
+
+    /* プロフィール情報テーブル */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      background-color: #fbfbfb;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+
+    .profile-item span {
+      font-weight: bold;
+      color: #777;
+      display: block;
+      font-size: 0.85rem;
+    }
+
+    /* 主な特徴・魅力リスト */
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .features-list {
+      list-style-type: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .features-list li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 15px;
+    }
+
+    .features-list li::before {
+      content: "◆";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    .koma .features-list li::before { color: var(--color-koma); }
+    .tsukuri .features-list li::before { color: var(--color-tsukuri-text); }
+    .liz .features-list li::before { color: var(--color-liz); }
+
+    .feature-bold {
+      font-weight: 700;
+      color: #222;
+    }
+
+    /* スマホ表示の最適化 */
+    @media (max-width: 600px) {
+      body { padding: 20px 10px; }
+      .talent-card { padding: 20px; }
+      .title-gradient { font-size: 1.8rem; }
+      .talent-name { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- ヘッダー -->
+    <header>
+      <h1 class="title-gradient">ミリプロ所属タレント紹介</h1>
+      <p class="subtitle">情報源：ミリプロ公式サイト / ミリプロ非公式Wiki</p>
+    </header>
+
+    <!-- 小廻こま -->
+    <section class="talent-card koma">
+      <div class="card-header">
+        <h2 class="talent-name koma">小廻こま <small style="font-size: 1.1rem; color: #888;">(こまわり こま / Komawari Koma)</small></h2>
+        <span class="talent-affiliation koma">ミリプロ3期生</span>
+      </div>
+      <p class="catchphrase">「みんなの一コマ、こまにちょーだい！」</p>
+      
+      <div class="profile-grid">
+        <div class="profile-item"><span>初配信日</span>2025年3月22日</div>
+        <div class="profile-item"><span>誕生日</span>8月1日</div>
+        <div class="profile-item"><span>身長</span>148 cm</div>
+        <div class="profile-item"><span>イラストママ</span>甘狼このみ</div>
+      </div>
+
+      <div class="section-title">主な特徴・魅力</div>
+      <ul class="features-list">
+        <li><span class="feature-bold">圧倒的な声量と高い歌唱力：</span> 配信音量を10%に設定しても音割れするほどの規格外な大声が名物。一度聞いたら印象に残る声色と、高い歌唱力とのギャップが魅力です。</li>
+        <li><span class="feature-bold">元社会人の苦労人・ツッコミ担当：</span> 社会人経験に基づく常識的な感覚を持ち、周囲の破天荒な言動に対して鋭くツッコミを入れる苦労人ポジションです。</li>
+        <li><span class="feature-bold">「MadTownGTA」での大ブレイク：</span> ストリーマーイベント「MadTownGTA」にて救急隊としての活躍や不憫で面白いムーブが話題となり、チャンネル登録者数が大きく急増しました。</li>
+        <li><span class="feature-bold">豪快な酒豪：</span> ワインや日本酒を好み、配信やプライベートで1人で一瓶を軽々と空けるほどの酒好きです。</li>
+      </ul>
+    </section>
+
+    <!-- 眠雲ツクリ -->
+    <section class="talent-card tsukuri">
+      <div class="card-header">
+        <h2 class="talent-name tsukuri">眠雲ツクリ <small style="font-size: 1.1rem; color: #888;">(ねむくも つくり / Nemukumo Tsukuri)</small></h2>
+        <span class="talent-affiliation tsukuri">ミリプロUNI</span>
+      </div>
+      <p class="catchphrase">「君との思い出、作ってあげる。」</p>
+      
+      <div class="profile-grid">
+        <div class="profile-item"><span>初配信日</span>2025年5月17日</div>
+        <div class="profile-item"><span>誕生日</span>9月3日</div>
+        <div class="profile-item"><span>身長</span>160 cm（厚底なし156cm）</div>
+        <div class="profile-item"><span>イラストママ</span>りいちゅ</div>
+      </div>
+
+      <div class="section-title">主な特徴・魅力</div>
+      <ul class="features-list">
+        <li><span class="feature-bold">万能マルチクリエイター：</span> 作詞・作曲、歌唱、MIX、動画編集、イラスト、デザインまでを高水準でこなします。バンド経験がありギター演奏も可能です。</li>
+        <li><span class="feature-bold">真面目で冷静なツッコミ役：</span> 普段は落ち着いた雰囲気で配信を回す頭脳派です。身内コラボなどではキレのあるツッコミやキレ芸を披露し爆発力を発揮します。</li>
+        <li><span class="feature-bold">料理上手（マカロン格闘中）：</span> 基本的な料理やお菓子作りが得意です。ただしマカロン作りだけは失敗が続いており、試行錯誤を重ねるお茶目な一面もあります。</li>
+      </ul>
+    </section>
+
+    <!-- 雨夜リズ -->
+    <section class="talent-card liz">
+      <div class="card-header">
+        <h2 class="talent-name liz">雨夜リズ <small style="font-size: 1.1rem; color: #888;">(あまよ りず / Amaya Liz)</small></h2>
+        <span class="talent-affiliation liz">ミリプロUNI</span>
+      </div>
+      <p class="catchphrase">「迷い込んで、雨宿り。」</p>
+      
+      <div class="profile-grid">
+        <div class="profile-item"><span>初配信日</span>2025年5月18日</div>
+        <div class="profile-item"><span>誕生日</span>3月19日</div>
+        <div class="profile-item"><span>身長</span>161 cm</div>
+        <div class="profile-item"><span>イラストママ</span>猫科純</div>
+      </div>
+
+      <div class="section-title">主な特徴・魅力</div>
+      <ul class="features-list">
+        <li><span class="feature-bold">高い歌唱力とイラストセンス：</span> 歌唱パフォーマンスのクオリティが高く、自身で描くイラスト技術にも秀でている実力派です。相棒はカエルの「けろまる」です。</li>
+        <li><span class="feature-bold">愛され「PON（うっかり）」キャラ：</span> 配信中に誤って設定画面や社用Discord画面を露出させたり、内カメラを起動させそうになるなど、ミリプロ屈指のPONエピソードを誇ります。</li>
+        <li><span class="feature-bold">自称・清楚＆ロリ枠：</span> 本人は清楚系を自称しているものの、数々の豪快なやらかしとハプニングにより、周囲やリスナーから温かくイジられています。</li>
+      </ul>
+    </section>
+  </div>
+
+</body>
+</html>
